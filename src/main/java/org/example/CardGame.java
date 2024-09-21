@@ -4,11 +4,25 @@ import java.util.ArrayList;
 
 public class CardGame {
     private ArrayList<Card> deckOfCards = new ArrayList<>();
+    private String name;
+    // heart     diamond    spade     club
+    private final String[] SUIT = {"\u2661", "\u2662", "\u2664", "\u2667"};
+    private final String[] SYMBOL = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+    private final int[] VALUE = {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
 
-    public CardGame(){
-
+    public CardGame(String name){
+        this.name = name;
+        generateDeckOfCard();
     }
-    
+
+    public void generateDeckOfCard(){
+        for(int i = 0; i < SUIT.length; i++){
+            for(int j = 0; j < SYMBOL.length; j++){
+                deckOfCards.add(new Card(SUIT[i], SYMBOL[j], VALUE[j] ));
+            }
+        }
+    }
+
     public String getDeck(){
         return (deckOfCards.toString());
     }
