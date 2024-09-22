@@ -55,6 +55,7 @@ public class CardGame {
 
     public ArrayList<Card> shuffleDeck(){
         // shuffle into a random order
+        Collections.shuffle(deckOfCards);
         return deckOfCards;
     }
 }
