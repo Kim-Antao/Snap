@@ -45,7 +45,11 @@ public class CardGame {
 
     public ArrayList<Card> sortDeckIntoSuits() {
         // 2,3,4... of heart, 2,3,4.... of diamonds
-
+        deckOfCards.sort(new Comparator<Card>(){
+            public int compare(Card c1, Card c2){
+                return String.valueOf(c1.getSUIT()).compareTo(c2.getSUIT());
+            }
+        });
          return deckOfCards;
     }
 
