@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class CardGame {
+public abstract class CardGame {
     private ArrayList<Card> deckOfCards = new ArrayList<>();
     private String name;
     // heart     diamond    spade     club
@@ -14,7 +14,7 @@ public class CardGame {
 
     public CardGame(String name){
         this.name = name;
-        generateDeckOfCard();
+//        generateDeckOfCard();
     }
 
     public void generateDeckOfCard(){
@@ -30,32 +30,39 @@ public class CardGame {
     }
 
     public Card dealCard(){
-        return deckOfCards.get(0);
+        if(deckOfCards.isEmpty()){
+            generateDeckOfCard();
+            shuffleDeck();
+        }
+        Card topCard = deckOfCards.getLast();
+        deckOfCards.removeLast();
+
+        return topCard;
     }
 
-    public ArrayList<Card> sortDeckInNumber(){
+    public void sortDeckInNumber(){
        // sort the deck by number 222233334444
         deckOfCards.sort(new Comparator<Card>() {
             public int compare(Card c1, Card c2) {
                 return Integer.compare(c1.getValue(), c2.getValue());
             }
         });
-        return deckOfCards;
+//        return deckOfCards;
     }
 
-    public ArrayList<Card> sortDeckIntoSuits() {
+    public void sortDeckIntoSuits() {
         // 2,3,4... of heart, 2,3,4.... of diamonds
         deckOfCards.sort(new Comparator<Card>(){
             public int compare(Card c1, Card c2){
                 return String.valueOf(c1.getSUIT()).compareTo(c2.getSUIT());
             }
         });
-         return deckOfCards;
+//         return deckOfCards;
     }
 
-    public ArrayList<Card> shuffleDeck(){
+    public void shuffleDeck(){
         // shuffle into a random order
         Collections.shuffle(deckOfCards);
-        return deckOfCards;
+//        return deckOfCards;
     }
 }
