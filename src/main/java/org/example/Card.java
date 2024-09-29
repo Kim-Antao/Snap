@@ -1,8 +1,5 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Card {
 
     private String suit ;
@@ -29,10 +26,7 @@ public class Card {
 
     @Override
     public String toString() {
-        return "Card{" +
-                "suit='" + suit + '\'' +
-                ", symbol='" + symbol + '\'' +
-                ", value=" + value +
-                '}';
+        return this.symbol + " " + this.suit;
+
     }
 }
