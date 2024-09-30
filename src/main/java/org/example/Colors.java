@@ -7,7 +7,7 @@ public enum Colors {
     BLUE("\u001B[34m"),
     WHITE("\u001B[37m");
 
-    public String color;
+    public final String color;
 
     Colors(String color){
         this.color = color;
