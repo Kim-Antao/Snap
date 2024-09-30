@@ -6,10 +6,9 @@ import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static org.example.Colors.*;
 
 
-// add diff color for each player
-// split in diff functions
 public class Snap extends CardGame {
 
     private Boolean hasSnapped = false;
@@ -31,14 +30,14 @@ public class Snap extends CardGame {
         System.out.println("Enter the first player's name");
         name = scanner.nextLine();
         name = waitTillNotEmpty(name);
-        Player player1 = new Player(name);
+        Player player1 = new Player(name, YELLOW.getColor());
 
         System.out.println("Enter the second player's name");
         name = scanner.nextLine();
         name = waitTillNotEmpty(name);
-        Player player2 = new Player(name);
+        Player player2 = new Player(name, BLUE.getColor());
 
-        System.out.println(player1.getName() + " to start the game.");
+        System.out.println(player1.getFontColor() + player1.getName() + " to start the game.");
         System.out.println("Please press Enter");
         userInput = scanner.nextLine();
         waitTillUserPressesEnter(userInput);
@@ -46,33 +45,34 @@ public class Snap extends CardGame {
         while (userInput.isEmpty()) {
             cardDealt = this.dealCard();
             System.out.println(cardDealt);
-            System.out.println("______________________________");
 
             checkIfSnap();
             if(hasSnapped){
                 if((previousCardDealt != null) && (cardDealt.getSYMBOL().equals(previousCardDealt.getSYMBOL()))){
-                    System.out.println("Its a match!");
+                    System.out.println(GREEN.getColor() + "Its a match!");
                     System.out.println("You Win!!");
-                    System.out.println("Would you like to play again? (Y/N)");
+                    System.out.println(WHITE.getColor() + "Would you like to play again? (Y/N)");
                     restartGame();
                     break;
                 }else{
-                    System.out.println("Not a match");
+                    System.out.println(RED.getColor() + "Not a match");
                 }
             }
             else{
                 if((previousCardDealt != null) && (cardDealt.getSYMBOL().equals(previousCardDealt.getSYMBOL()))){
-                    System.out.println("You missed a match!");
+                    System.out.println(RED.getColor() + "You missed a match!");
                 }
             }
 
             previousCardDealt = cardDealt;
 
+            System.out.println("______________________________");
+
             if(isPlayer1){
-                System.out.println(player2.getName() + "'s turn");
+                System.out.println(player2.getFontColor() + player2.getName() + "'s turn");
 
             }else {
-                System.out.println(player1.getName() + "'s turn");
+                System.out.println(player1.getFontColor() + player1.getName() + "'s turn");
             }
 
             isPlayer1 = !isPlayer1;
@@ -112,7 +112,6 @@ public class Snap extends CardGame {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-//                checkingIfWon();
                 try {
                     if(hasSnapped.equals(false)){
                         Robot robot = new Robot();
@@ -134,8 +133,6 @@ public class Snap extends CardGame {
         timer.cancel();
     }
 
-
-
     public void restartGame(){
         String restart = scanner.nextLine();
         if(restart.equalsIgnoreCase("y")){
@@ -148,29 +145,5 @@ public class Snap extends CardGame {
             restartGame();
         }
     }
-
-    public void checkingIfWon(){
-//        System.out.println("has snapped value is " + hasSnapped);
-//        System.out.println("User input was "+ userInput);
-
-//        if(hasSnapped){
-//            if((previousCardDealt != null) && (cardDealt.getSYMBOL().equals(previousCardDealt.getSYMBOL()))){
-//                System.out.println("Its a match!");
-//                System.out.println("You Win!!");
-//                System.out.println("Would you like to play again? (Y/N)");
-//                restartGame();
-//                break;
-//            }else{
-//                System.out.println("Not a match");
-//            }
-//        }
-//        else{
-//            if((previousCardDealt != null) && (cardDealt.getSYMBOL().equals(previousCardDealt.getSYMBOL()))){
-//                System.out.println("You missed a match!");
-//            }
-//        }
-
-    }
-
 
 }
