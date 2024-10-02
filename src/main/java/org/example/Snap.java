@@ -8,11 +8,10 @@ import java.util.TimerTask;
 
 import static org.example.Colors.*;
 
-
 public class Snap extends CardGame {
 
     private Boolean hasSnapped = false;
-    private String userInput;
+    private String userInput, name=null;
     private final Scanner scanner = new Scanner(System.in);
 
     public Snap(String name) {
@@ -23,24 +22,20 @@ public class Snap extends CardGame {
         Card cardDealt;
         Card previousCardDealt = null;
         boolean isPlayer1 = true;
-        String name;
 
         introMessage();
 
         System.out.println("Enter the first player's name");
-        name = scanner.nextLine();
-        name = waitTillNotEmpty(name);
+        name = getPlayerName();
         Player player1 = new Player(name, YELLOW.getColor());
 
         System.out.println("Enter the second player's name");
-        name = scanner.nextLine();
-        name = waitTillNotEmpty(name);
+        name = getPlayerName();
         Player player2 = new Player(name, BLUE.getColor());
 
         System.out.println(player1.getFontColor() + player1.getName() + " to start the game.");
         System.out.println("Please press Enter");
-        userInput = scanner.nextLine();
-        waitTillUserPressesEnter(userInput);
+        checkForEnterKeystroke();
 
         while (userInput.isEmpty()) {
             cardDealt = this.dealCard();
@@ -77,8 +72,7 @@ public class Snap extends CardGame {
 
             isPlayer1 = !isPlayer1;
 
-            userInput = scanner.nextLine();
-            waitTillUserPressesEnter(userInput);
+            checkForEnterKeystroke();
         }
     }
 
@@ -93,7 +87,8 @@ public class Snap extends CardGame {
 
     }
 
-    public String waitTillNotEmpty(String name){
+    public String getPlayerName(){
+        name = scanner.nextLine();
         while(name.isEmpty()){
             System.out.println("Name cannot be empty");
             name = scanner.nextLine();
@@ -101,7 +96,9 @@ public class Snap extends CardGame {
         return name;
     }
 
-    public void waitTillUserPressesEnter(String userInput){
+    public void checkForEnterKeystroke(){
+        userInput = scanner.nextLine();
+
         while(!userInput.isEmpty()){
             System.out.println("You only need to press Enter");
             userInput = scanner.nextLine();
@@ -117,18 +114,20 @@ public class Snap extends CardGame {
                         Robot robot = new Robot();
                         robot.keyPress(KeyEvent.VK_ENTER);
                     }
-
                 } catch (AWTException e) {
                     throw new RuntimeException(e);
                 }
-
             }
         };
 
         Timer timer = new Timer();
         timer.schedule(task,2000);
         userInput = scanner.nextLine();
-        hasSnapped= userInput.equalsIgnoreCase("snap") ;
+        if(userInput.equalsIgnoreCase("snap")){
+            hasSnapped= userInput.equalsIgnoreCase("snap") ;
+        } else if (!userInput.isEmpty()) {
+            System.out.println(RED.getColor() + "Invalid string: only snap or 'Enter' permitted.");
+        }
 
         timer.cancel();
     }
